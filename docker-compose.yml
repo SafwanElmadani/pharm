@@ -1,0 +1,43 @@
+name: pharm
+
+services:
+
+  db: #service name can be used as the dns name
+    image: postgres
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pharm_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      pharm_network:
+        ipv4_address: 172.20.0.11
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      pharm_network:
+        ipv4_address: 172.20.0.12
+
+volumes:
+  db-data:
+  pgadmin-data:
+
+networks:
+  pharm_network:
+    name: pharm_network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
