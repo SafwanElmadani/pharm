@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharmacy Products</title>
+</head>
+<body>
+  <h2>Add Product</h2>
+  <form method="post" action="/add">
+    <label>Product Line:</label><br>
+    <input type="text" name="line" required><br><br>
+
+    <label>Product Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <button type="submit">Add Product</button>
+  </form>
+  <h2>Saved Products</h2>
+  <ul>
+    {% for product in products %}
+      <li>{{ product.line }} - {{ product.name }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
+
